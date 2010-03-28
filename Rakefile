@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('continued_fractions', '1.2.1') do |config|
+Echoe.new('continued_fractions', '1.2.2') do |config|
   config.summary                  = 'Generate continued fractions.'
   config.author                   = 'Jose Hales-Garcia'
   config.url                      = 'http://github.com/jolohaga/continued_fractions'
