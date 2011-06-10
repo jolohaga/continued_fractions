@@ -39,7 +39,8 @@ module ContinuedFractions
     #   => [355,113]
     #
     def convergent(nth)
-      convergents[nth]
+      raise(IndexError, "Convergent index must be greater than zero.") unless nth > 0
+      convergents[nth-1]
     end
     
     # Return array of convergents of the continued fraction instance up to the nth convergent as an array
@@ -76,8 +77,50 @@ module ContinuedFractions
     def convergents_as_rationals(nth=nil)
       ContinuedFractions.convergents_array_to_rationals(convergents,nth)
     end
+    
+    def +(other)
+      _number_of(other) do |num,prec|
+        _evaluate("#{@number} + #{num}",prec)
+      end
+    end
+    
+    def -(other)
+      _number_of(other) do |num,prec|
+        _evaluate("#{@number} - #{num}",prec)
+      end
+    end
+    
+    def /(other)
+      _number_of(other) do |num,prec|
+        _evaluate("#{@number} / #{num}",prec)
+      end
+    end
+    
+    def *(other)
+      _number_of(other) do |num,prec|
+        _evaluate("#{@number} * #{num}",prec)
+      end
+    end
 
     private
+    def _evaluate(e,p)
+      ContinuedFraction.new(eval(e), p)
+    end
+    
+    def _number_of(n)
+      num = nil
+      prec = nil
+      case n.class.name
+      when "Fixnum","Integer"
+        num = n
+        prec = @limit
+      when "ContinuedFractions::ContinuedFraction"
+        num = n.number
+        prec = [n.limit,@limit].max
+      end
+      yield(num,prec)
+    end
+    
     def _convergents(nth=nil)
       nth ||= @convergents.length
       @convergents[0...nth]

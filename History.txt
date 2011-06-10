@@ -1,7 +1,18 @@
+=== 1.3.0 / 2011-06-10
+
+* Added binary operators: + - * / between two ContinuedFractions and a ContinuedFraction and a number (on the right-hand-side).  Returns a ContinuedFraction.
+* Added tests for operators.
+
+=== 1.2.3 / 2011-06-09
+
+* Fixed emplementation of #convergent to match its definition.
+* Added exception on #convergent to be raised when index is less than 1.
+* Added mention of ContinuedFractions#convergents_as_rationals in README
+* Changed README example.  Variable real changed to pi.
+
 === 1.2.2 / 2010-03-27
 
 * Moved repo to Git.
-
 
 === 1.2.1 / 2010-03-18
 

@@ -31,9 +31,51 @@ module ContinuedFractions
     
     it "should contain convergents which are expressed in lowest terms" do
       1.upto(@cf.convergents.length-1) do |i|
-        convergent_rational_i_minus1, convergent_rational_i = ContinuedFractions.convergent_to_rational(@cf.convergent(i-1)), ContinuedFractions.convergent_to_rational(@cf.convergent(i))
-        (convergent_rational_i_minus1.numerator*convergent_rational_i.denominator - convergent_rational_i.numerator*convergent_rational_i_minus1.denominator).should == (-1)**(i)
+        convergent_rational_i, convergent_rational_i_plus1 = ContinuedFractions.convergent_to_rational(@cf.convergent(i)), ContinuedFractions.convergent_to_rational(@cf.convergent(i+1))
+        (convergent_rational_i.numerator*convergent_rational_i_plus1.denominator - convergent_rational_i_plus1.numerator*convergent_rational_i.denominator).should == (-1)**(i)
       end
+    end
+    
+    it "should add a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
+      (@cf + 3).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should subtract a number (on the right-hand-side) from a continued fraction and return a continued fraction" do
+      (@cf - 3).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should multiply a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
+      (@cf * 3).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should divide a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
+      (@cf / 3).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should add a continued fraction with another continued fraction and return a continued fraction" do
+      c = ContinuedFraction.new(rand,20)
+      (@cf + c).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should subtract a continued fraction with another continued fraction and return a continued fraction" do
+      c = ContinuedFraction.new(rand,20)
+      (@cf - c).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should multiply a continued fraction with another continued fraction and return a continued fraction" do
+      c = ContinuedFraction.new(rand,20)
+      (@cf * c).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should divide a continued fraction with another continued fraction and return a continued fraction" do
+      c = ContinuedFraction.new(rand,20)
+      (@cf / c).class.should == ContinuedFractions::ContinuedFraction
+    end
+    
+    it "should assign the result continued fraction of a binary operation the max limit of the two operands" do
+      c = ContinuedFraction.new(rand,20)
+      result = @cf + c
+      result.limit.should == [@cf.limit,c.limit].max
     end
   end
 end
