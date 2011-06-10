@@ -28,7 +28,7 @@ Generates quotients and convergents for a given number.
   cf.convergents
   => [[3,1], [22,7], [333,106], [355,113], [103993,33102], [104348,33215], [208341,66317], [312689,99532], [833719,265381], [1146408,364913]]
 
-  # Convergents are can be output as an array of Rationals too
+  # Convergents can be output as an array of Rationals too
   cf.convergents_as_rationals
   [(3/1), (22/7), (333/106), (355/113), (103993/33102), (104348/33215), (208341/66317), (312689/99532), (833719/265381), (1146408/364913)]
   

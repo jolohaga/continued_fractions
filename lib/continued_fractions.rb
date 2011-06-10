@@ -103,11 +103,11 @@ module ContinuedFractions
     end
 
     private
-    def _evaluate(e,p)
+    def _evaluate(e,p) #:nodoc:
       ContinuedFraction.new(eval(e), p)
     end
     
-    def _number_of(n)
+    def _number_of(n) #:nodoc:
       num = nil
       prec = nil
       case n.class.name
@@ -121,12 +121,12 @@ module ContinuedFractions
       yield(num,prec)
     end
     
-    def _convergents(nth=nil)
+    def _convergents(nth=nil) #:nodoc:
       nth ||= @convergents.length
       @convergents[0...nth]
     end
 
-    def calculate_quotients
+    def calculate_quotients #:nodoc:
       qs = Array.new(@limit)
       n = @number
       @limit.times do |i|
@@ -136,7 +136,7 @@ module ContinuedFractions
       qs
     end
 
-    def calculate_convergents
+    def calculate_convergents #:nodoc:
       ContinuedFractions.convergents(quotients)
     end
   end
