@@ -34,39 +34,39 @@ describe ContinuedFraction do
   end
   
   it "should add a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
-    expect((cf + 3)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf + 3)).to be_kind_of(ContinuedFraction)
   end
   
   it "should subtract a number (on the right-hand-side) from a continued fraction and return a continued fraction" do
-    expect((cf - 3)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf - 3)).to be_kind_of(ContinuedFraction)
   end
   
   it "should multiply a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
-    expect((cf * 3)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf * 3)).to be_kind_of(ContinuedFraction)
   end
   
   it "should divide a number (on the right-hand-side) with a continued fraction and return a continued fraction" do
-    expect((cf / 3)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf / 3)).to be_kind_of(ContinuedFraction)
   end
   
   it "should add a continued fraction with another continued fraction and return a continued fraction" do
     c = described_class.new(rand,20)
-    expect((cf + c)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf + c)).to be_kind_of(ContinuedFraction)
   end
   
   it "should subtract a continued fraction with another continued fraction and return a continued fraction" do
     c = described_class.new(rand,20)
-    expect((cf - c)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf - c)).to be_kind_of(ContinuedFraction)
   end
   
   it "should multiply a continued fraction with another continued fraction and return a continued fraction" do
     c = described_class.new(rand,20)
-    expect((cf * c)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf * c)).to be_kind_of(ContinuedFraction)
   end
   
   it "should divide a continued fraction with another continued fraction and return a continued fraction" do
     c = described_class.new(rand,20)
-    expect((cf / c)).to be_kind_of(ContinuedFractions::ContinuedFraction)
+    expect((cf / c)).to be_kind_of(ContinuedFraction)
   end
   
   it "should assign the result continued fraction of a binary operation the max limit of the two operands" do

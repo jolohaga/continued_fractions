@@ -5,7 +5,6 @@ LICENSE
 Manifest
 README.md
 Rakefile
-continued_fractions.gemspec
 lib/continued_fractions.rb
 spec/continued_fractions/continued_fraction_spec.rb
 spec/spec_helper.rb
