@@ -1,17 +1,17 @@
-= ContinuedFractions
+## ContinuedFractions
 
 * http://rubygems.org/gems/continued_fractions
 
-== Description:
+#### Description
 
 Generates quotients and convergents for a given number.
 
-== Features/Problems:
+#### Features/Problems
 
 * Requires Ruby 1.9+
 * Depends on Ruby 1.9's Rational class
 
-== Synopsis:
+#### Synopsis
 
   require 'continued_fractions'  
   include ContinuedFractions
@@ -45,40 +45,17 @@ Generates quotients and convergents for a given number.
   => #<ContinuedFractions::ContinuedFraction:0x000001009d2708 @number=3.1799344075396196, @limit=20, @quotients=[3, 5, 1, 1, 3, 1, 5, 3, 7, 25, 1, 2, 15, 6, 1, 1, 2, 3, 1, 2], @convergents=[[3, 1], [16, 5], [19, 6], [35, 11], [124, 39], [159, 50], [919, 289], [2916, 917], [21331, 6708], [536191, 168617], [557522, 175325], [1651235, 519267], [25326047, 7964330], [153607517, 48305247], [178933564, 56269577], [332541081, 104574824], [844015726, 265419225], [2864588259, 900832499], [3708603985, 1166251724], [10281796229, 3233335947]]>
   
 
-== Requirements:
+#### Requirements
 
 * Ruby 1.9+
 
-== Install:
+#### Install
 
 sudo gem install continued_fractions
 
-== Developers:
+#### Developers
 
 * Ruby 1.9+
 * RSpec required to run tests.
 * Echoe required to run rake tasks.
-
-== License:
-
-  Copyright (c) 2010 Jose Hales-Garcia
-
-  Permission is hereby granted, free of charge, to any person obtaining
-  a copy of this software and associated documentation files (the
-  'Software'), to deal in the Software without restriction, including
-  without limitation the rights to use, copy, modify, merge, publish,
-  distribute, sublicense, and/or sell copies of the Software, and to
-  permit persons to whom the Software is furnished to do so, subject to
-  the following conditions:
-  
-  The above copyright notice and this permission notice shall be
-  included in all copies or substantial portions of the Software.
-  
-  THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
-  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-  IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
-  CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
