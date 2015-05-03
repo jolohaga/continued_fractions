@@ -1,7 +1,9 @@
 CHANGELOG
+Gemfile
 History.txt
+LICENSE
 Manifest
-README.txt
+README.md
 Rakefile
 continued_fractions.gemspec
 lib/continued_fractions.rb
