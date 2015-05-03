@@ -8,7 +8,6 @@
 #
 class ContinuedFraction
   attr_accessor :number, :quotients, :limit
-  attr_writer :convergents
   
   # For a given number calculate its continued fraction quotients and convergents up to limit.
   #
@@ -79,25 +78,25 @@ class ContinuedFraction
   
   def +(other)
     number_of(other) do |num,prec|
-      evaluate("#{@number} + #{num}",prec)
+      evaluate("#{number} + #{num}",prec)
     end
   end
   
   def -(other)
     number_of(other) do |num,prec|
-      evaluate("#{@number} - #{num}",prec)
+      evaluate("#{number} - #{num}",prec)
     end
   end
   
   def /(other)
     number_of(other) do |num,prec|
-      evaluate("#{@number} / #{num}",prec)
+      evaluate("#{number} / #{num}",prec)
     end
   end
   
   def *(other)
     number_of(other) do |num,prec|
-      evaluate("#{@number} * #{num}",prec)
+      evaluate("#{number} * #{num}",prec)
     end
   end
   
@@ -126,7 +125,7 @@ class ContinuedFraction
 
   def calculate_quotients #:nodoc:
     qs = Array.new(limit)
-    n = @number
+    n = number
     limit.times do |i|
       qs[i] = n.to_i
       n = 1.0/(n-qs[i])

@@ -1,0 +1,3 @@
+v1.5.1 Use attribute accessors where possible
+
+v1.5.0 Remove ContinuedFractions module; Move its methods into ContinuedFraction class

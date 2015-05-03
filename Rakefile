@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('continued_fractions', '1.5.0') do |config|
+Echoe.new('continued_fractions', '1.5.1') do |config|
   config.summary                  = 'Generate continued fractions'
   config.description              = 'Class for working with continued fractions'
   
