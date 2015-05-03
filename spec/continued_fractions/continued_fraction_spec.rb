@@ -8,7 +8,7 @@ describe ContinuedFraction do
     # First 10 convergents of PI are...
     convs = ['3/1', '22/7', '333/106', '355/113', '103993/33102', '104348/33215', '208341/66317', '312689/99532', '833719/265381', '1146408/364913'].map{|c| Rational(c)}
     cf = described_class.new(Math::PI,10)
-    expect((ContinuedFractions.convergents_array_to_rationals(cf.convergents) - convs)).to be_empty
+    expect((cf.convergents_as_rationals - convs)).to be_empty
   end
   
   it "should return array for convergents method" do
@@ -21,14 +21,14 @@ describe ContinuedFraction do
   
   it "should contain convergents approaching the number" do
     0.upto(cf.convergents.length-2) do |i|
-      convergent_rational_i_plus1, convergent_rational_i = ContinuedFractions.convergent_to_rational(cf.convergents[i+1]), ContinuedFractions.convergent_to_rational(cf.convergents[i])
+      convergent_rational_i_plus1, convergent_rational_i = cf.convergent_to_rational(cf.convergents[i+1]), cf.convergent_to_rational(cf.convergents[i])
       expect(((convergent_rational_i_plus1 - cf.number).abs <= (convergent_rational_i - cf.number).abs)).to be true
     end
   end
   
   it "should contain convergents which are expressed in lowest terms" do
     1.upto(cf.convergents.length-1) do |i|
-      convergent_rational_i, convergent_rational_i_plus1 = ContinuedFractions.convergent_to_rational(cf.convergent(i)), ContinuedFractions.convergent_to_rational(cf.convergent(i+1))
+      convergent_rational_i, convergent_rational_i_plus1 = cf.convergent_to_rational(cf.convergent(i)), cf.convergent_to_rational(cf.convergent(i+1))
       expect((convergent_rational_i.numerator*convergent_rational_i_plus1.denominator - convergent_rational_i_plus1.numerator*convergent_rational_i.denominator)).to eq (-1)**(i)
     end
   end
