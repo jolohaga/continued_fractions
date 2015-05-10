@@ -124,13 +124,15 @@ class ContinuedFraction
   end
 
   def calculate_quotients #:nodoc:
-    qs = Array.new(limit)
     n = number
-    limit.times do |i|
-      qs[i] = n.to_i
-      n = 1.0/(n-qs[i])
-    end
-    qs
+    Array.new(limit).tap do |qs|
+      limit.times do |i|
+        qs[i] = n.to_i
+        break if ((divisor = n-qs[i]) == 0.0)
+        n = 1.0/divisor
+      end
+      self.limit = qs.compact.length
+    end.compact
   end
 
   def calculate_convergents #:nodoc:
