@@ -57,7 +57,7 @@ describe ContinuedFraction do
   context 'with irrational numbers' do
     it "accurately calculates the convergents" do
       # First 10 convergents of PI are...
-      convs = ['3/1', '22/7', '333/106', '355/113', '103993/33102', '104348/33215', '208341/66317', '312689/99532', '833719/265381', '1146408/364913'].map{|c| Rational(c)}
+      convs = ['3/1', '22/7', '333/106', '355/113', '103993/33102', '104348/33215', '208341/66317', '312689/99532', '833719/265381', '1146408/364913'].map(&:to_r)
       cf = described_class.new(Math::PI,10)
       expect((cf.convergents_as_rationals - convs)).to be_empty
     end
@@ -83,7 +83,7 @@ describe ContinuedFraction do
     end
     
     it 'calculates the convergents' do
-      convs = [ '1/1', '3/2' ].map{|c| Rational(c)}
+      convs = [ '1/1', '3/2' ].map(&:to_r)
       expect(described_class.new(1.5, 10).convergents_as_rationals - convs).to be_empty
     end
   end
