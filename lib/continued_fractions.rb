@@ -112,11 +112,11 @@ class ContinuedFraction
   def number_of(n) #:nodoc:
     num = nil
     prec = nil
-    case n.class.name
-    when "Fixnum","Integer"
+    case n
+    when Fixnum, Integer
       num = n
       prec = limit
-    when "ContinuedFraction"
+    when ContinuedFraction
       num = n.number
       prec = [n.limit,limit].max
     end
