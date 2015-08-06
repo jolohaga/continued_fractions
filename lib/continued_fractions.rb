@@ -8,7 +8,7 @@
 #
 class ContinuedFraction
   attr_accessor :number, :quotients, :limit
-  
+
   # For a given number calculate its continued fraction quotients and convergents up to limit.
   #
   # The limit is 5 by default. Pass an integer in the second parameter to change it.
@@ -26,7 +26,7 @@ class ContinuedFraction
     @quotients = calculate_quotients
     @convergents = calculate_convergents
   end
-  
+
   # Return nth convergent.
   #
   # Example:
@@ -38,7 +38,7 @@ class ContinuedFraction
     raise(IndexError, "Convergent index must be greater than zero.") unless nth > 0
     convergents[nth-1]
   end
-  
+
   # Return array of convergents of the continued fraction instance up to the nth convergent as an array
   # comprising of numerators in [i,0] and denominators in [i,1].
   # If nth is nil, then return the entire list.
@@ -57,7 +57,7 @@ class ContinuedFraction
     nth ||= @convergents.length
     @convergents[0...nth]
   end
-  
+
   # Return array of convergents of the continued fraction instance converted as Rationals.
   # If nth is nil, then return the entire list.
   #
@@ -75,40 +75,55 @@ class ContinuedFraction
     nth ||= convergents.length
     convergents[0...nth].map{|convergent| convergent_to_rational(convergent)}
   end
-  
+
   def +(other)
     number_of(other) do |num,prec|
       evaluate("#{number} + #{num}",prec)
     end
   end
-  
+
   def -(other)
     number_of(other) do |num,prec|
       evaluate("#{number} - #{num}",prec)
     end
   end
-  
+
   def /(other)
     number_of(other) do |num,prec|
       evaluate("#{number} / #{num}",prec)
     end
   end
-  
+
   def *(other)
     number_of(other) do |num,prec|
       evaluate("#{number} * #{num}",prec)
     end
   end
-  
+
   def convergent_to_rational(convergent) #:nodoc:
     Rational(convergent[0],convergent[1])
   end
-  
+
+  ##
+  # a.eql?(b) iff a and b are equivalent objects without type coercion.
+  #
+  def eql?(other)
+    (number == other.number) && (limit == other.limit)
+  end
+
+  ##
+  # a == b iff a and b are equivalent objects with type coercion. We do not
+  # perform any type coercion so delegate to #eql?
+  #
+  def ==(other)
+    self.eql?(other)
+  end
+
   private
   def evaluate(exp, prec) #:nodoc:
     ContinuedFraction.new(eval(exp), prec)
   end
-  
+
   def number_of(n) #:nodoc:
     num = nil
     prec = nil
@@ -145,7 +160,7 @@ class ContinuedFraction
     end
     convs[2...nth+2]
   end
-  
+
   def convergence_matrix(n,m,fill=nil) #:nodoc:
     conv_mat = Array.new(n).map!{Array.new(m,fill)}
     conv_mat[0][0],conv_mat[1][1] = 0,0
