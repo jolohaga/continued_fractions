@@ -1,21 +1,6 @@
-require 'rubygems'
-require 'rake'
-require 'echoe'
+require "bundler/gem_tasks"
+require "rspec/core/rake_task"
 
-Echoe.new('continued_fractions', '1.6.0') do |config|
-  config.summary                  = 'Generate continued fractions'
-  config.description              = 'Class for working with continued fractions'
-  
-  config.ruby_version              = ">=2.2.2"
-  config.licenses                  = 'MIT'
-  
-  config.author                   = 'Jose Hales-Garcia'
-  config.email                    = 'jolohaga@me.com'
-  config.url                      = 'http://jolohaga.github.io/continued_fractions'
-  
-  config.ignore_pattern           = ["tmp/*",".hg/*", ".pkg/*", ".git/*"]
+RSpec::Core::RakeTask.new(:spec)
 
-  config.development_dependencies = ['rspec ~>3.2.0','echoe ~>4.6.6']
-end
-
-Dir["#{File.dirname(__FILE__)}/tasks/*.rake"].sort.each{|ext| load ext}
+task :default => :spec
