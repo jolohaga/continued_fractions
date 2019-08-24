@@ -14,10 +14,10 @@ Gem::Specification.new do |spec|
   spec.description = "Class for working with continued fractions"
   spec.email = "jolohaga@me.com"
   spec.extra_rdoc_files = ["LICENSE", "README.md", "lib/continued_fractions.rb"]
-  spec.files = ["Gemfile", "LICENSE", "README.md", "Rakefile", "continued_fractions.gemspec", "lib/continued_fractions.rb", "spec/continued_fractions/continued_fraction_spec.rb", "spec/spec_helper.rb"]
+  spec.files = ["Gemfile", "LICENSE", "README.md", "Rakefile", "continued_fractions.gemspec", "lib/continued_fractions.rb", "lib/continued_fractions/version.rb", "spec/continued_fractions/continued_fraction_spec.rb", "spec/spec_helper.rb"]
   spec.homepage = "http://jolohaga.github.io/continued_fractions"
   spec.licenses = ["MIT"]
-  spec.rdoc_options = ["--line-numbers", "--title", "Continued_fractions", "--main", "README.md"]
+  spec.rdoc_options = ["--line-numbers", "--title", "continued_fractions", "--main", "README.md"]
   spec.required_ruby_version = Gem::Requirement.new(">= 2.2.2")
   spec.rubyforge_project = "continued_fractions"
   spec.rubygems_version = "2.5.1"
