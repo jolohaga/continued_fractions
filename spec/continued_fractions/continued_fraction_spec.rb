@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), "/../spec_helper")
 
 describe ContinuedFraction do
-  let(:cf) { described_class.new(number,10) }
+  let(:cf) { described_class.new(number, 10) }
   let(:number) { rand }
 
   describe '#convergents' do
@@ -12,7 +12,7 @@ describe ContinuedFraction do
     context 'with irrational numbers' do
       it "accurately calculates the convergents" do
         # First 10 convergents of PI are...
-        convs = ['3/1', '22/7', '333/106', '355/113', '103993/33102', '104348/33215', '208341/66317', '312689/99532', '833719/265381', '1146408/364913'].map(&:to_r)
+        convs = [3/1r, 22/7r, 333/106r, 355/113r, 103993/33102r, 104348/33215r, 208341/66317r, 312689/99532r, 833719/265381r, 1146408/364913r]
         cf = described_class.new(Math::PI,10)
         expect((cf.convergents_as_rationals - convs)).to be_empty
       end
@@ -38,7 +38,7 @@ describe ContinuedFraction do
       end
     
       it 'calculates the convergents' do
-        convs = [ '1/1', '3/2' ].map(&:to_r)
+        convs = [ 1/1r, 3/2r ]
         expect(described_class.new(1.5, 10).convergents_as_rationals - convs).to be_empty
       end
     end
@@ -51,54 +51,20 @@ describe ContinuedFraction do
   end
 
   describe 'operators' do
+    let(:cf2) { described_class.new(rand, 20) }
 
-    it "assigns the resulting continued fraction of a binary operation the max limit of the two operands" do
-      c = described_class.new(rand,20)
-      result = cf + c
-      expect(result.limit).to eq [cf.limit,c.limit].max
-    end
+    %i{+ - * /}.each do |op|
+      describe "#{op}" do
+        [3, 3.0, 3/1r, described_class.new(rand, 20)].each do |rhs|
+          it "#{rhs.class.name} operates on the right-hand side and returns a ContinuedFraction" do
+            expect(cf.send(op, rhs)).to be_kind_of(ContinuedFraction)
+          end
+        end
 
-    describe '+' do
-      it "adds a number on the right-hand-side with a continued fraction and returns a continued fraction" do
-        expect((cf + 3)).to be_kind_of(ContinuedFraction)
-      end
-
-      it "adds a continued fraction with another continued fraction and returns a continued fraction" do
-        c = described_class.new(rand,20)
-        expect((cf + c)).to be_kind_of(ContinuedFraction)
-      end
-    end
-
-    describe '-' do
-      it "subtracts a number on the right-hand-side from a continued fraction and returns a continued fraction" do
-        expect((cf - 3)).to be_kind_of(ContinuedFraction)
-      end
-
-      it "subtracts a continued fraction with another continued fraction and returns a continued fraction" do
-        c = described_class.new(rand,20)
-        expect((cf - c)).to be_kind_of(ContinuedFraction)
-      end
-    end
-
-    describe '*' do
-      it "multiplies a number on the right-hand-side with a continued fraction and returns a continued fraction" do
-        expect((cf * 3)).to be_kind_of(ContinuedFraction)
-      end
-
-      it "multiplies a continued fraction with another continued fraction and returns a continued fraction" do
-        c = described_class.new(rand,20)
-        expect((cf * c)).to be_kind_of(ContinuedFraction)
-      end
-    end
-
-    describe '/' do
-      it "divides a number on the right-hand-side with a continued fraction and returns a continued fraction" do
-        expect((cf / 3)).to be_kind_of(ContinuedFraction)
-      end
-
-      it "divides a continued fraction with another continued fraction and returns a continued fraction" do
-        c = described_class.new(rand,20)
-        expect((cf / c)).to be_kind_of(ContinuedFraction)
+        it "Assigns the max limit of the two operands" do
+          result = cf.send(op, cf2)
+          expect(result.limit).to eq [cf.limit, cf2.limit].max
+        end
       end
     end
   end
