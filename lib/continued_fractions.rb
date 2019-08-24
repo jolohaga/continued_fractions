@@ -7,6 +7,8 @@
 #
 #
 class ContinuedFraction
+  include ::Comparable
+
   attr_accessor :number, :quotients, :limit
   
   # For a given number calculate its continued fraction quotients and convergents up to limit.
@@ -99,6 +101,10 @@ class ContinuedFraction
       evaluate("#{number} * #{num}",prec)
     end
   end
+
+  def <=>(other)
+    number <=> other.number
+  end
   
   def convergent_to_rational(convergent) #:nodoc:
     Rational(convergent[0],convergent[1])
@@ -108,7 +114,7 @@ class ContinuedFraction
   def evaluate(exp, prec) #:nodoc:
     ContinuedFraction.new(eval(exp), prec)
   end
-  
+
   def number_of(n) #:nodoc:
     num = nil
     prec = nil
