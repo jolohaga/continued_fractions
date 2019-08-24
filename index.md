@@ -1,7 +1,3 @@
-# ContinuedFractions
-
-* http://rubygems.org/gems/continued_fractions
-
 ## Description
 
 Generates quotients and convergents for a given number.
