@@ -113,7 +113,7 @@ class ContinuedFraction
     num = nil
     prec = nil
     case n
-    when Fixnum, Integer
+    when Float, Integer, Rational
       num = n
       prec = limit
     when ContinuedFraction
