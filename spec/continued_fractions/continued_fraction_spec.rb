@@ -68,4 +68,23 @@ describe ContinuedFraction do
       end
     end
   end
+
+  describe 'comparing' do
+    context 'when numbers are the same' do
+      let(:cf2) { described_class.new(cf.number) }
+
+      it "the ContinuedFractions are equal" do
+        expect(cf).to eq cf2
+      end
+    end
+
+    context 'when numbers are different' do
+      let(:cond) { [['+', '<'], ['-', '>']].sample }
+      let(:cf2) { described_class.new(cf.number.send(cond[0], 1.0)) }
+
+      it "the ContinuedFractions are unequal" do
+        expect(cf.send(cond[1], cf2)).to be true
+      end
+    end
+  end
 end
