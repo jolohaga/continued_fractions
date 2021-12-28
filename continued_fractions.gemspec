@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.description = "Class for working with continued fractions"
   spec.email = "jolohaga@me.com"
   spec.extra_rdoc_files = ["LICENSE", "README.md", "lib/continued_fractions.rb"]
-  spec.files = Dir.glob("{lib}/**/*") + %w{LICENSE README.md CHANGELOG.md}
+  spec.files = Dir.glob("{lib}/**/*") + %w{LICENSE README.md}
   spec.homepage = "http://jolohaga.github.io/continued_fractions"
   spec.licenses = ["MIT"]
   spec.rdoc_options = ["--line-numbers", "--title", "continued_fractions", "--main", "README.md"]
@@ -32,10 +32,13 @@ Gem::Specification.new do |spec|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       spec.add_development_dependency(%q<rspec>, ["~> 3.2"])
+      spec.add_development_dependency(%q<byebug>, ["~> 11.1"])
     else
       spec.add_dependency(%q<rspec>, ["~> 3.2"])
+      spec.add_dependency(%q<byebug>, ["~> 11.1"])
     end
   else
     spec.add_dependency(%q<rspec>, ["~> 3.2"])
+    spec.add_dependency(%q<byebug>, ["~> 11.1"])
   end
 end

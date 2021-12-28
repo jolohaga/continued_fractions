@@ -3,7 +3,7 @@
 # Generates quotients and convergents for a given number
 #
 # Author:: Jose Hales-Garcia (mailto:jolohaga@me.com)
-# Copyright:: Copyright (c) 2015 Jose Hales-Garcia
+# Copyright:: Copyright (c) 2021 Jose Hales-Garcia
 #
 #
 class ContinuedFraction
@@ -142,19 +142,27 @@ class ContinuedFraction
   end
 
   def calculate_convergents #:nodoc:
-    convs = convergence_matrix(quotients.length+2,2,1)
-    nth ||= convs.length
-    2.upto(quotients.length+1) do |i|
-      i_minus1,i_minus2 = i-1,i-2
-      convs[i][0] = convs[i_minus1][0]*quotients[i_minus2]+convs[i_minus2][0]
-      convs[i][1] = convs[i_minus1][1]*quotients[i_minus2]+convs[i_minus2][1]
-    end
-    convs[2...nth+2]
+    nth = nil
+    convergence_matrix(quotients.length+2,2,1).tap do |convs|
+      nth ||= convs.length
+      2.upto(quotients.length+1) do |i|
+        i_minus1,i_minus2 = i-1,i-2
+        convs[i][0] = convs[i_minus1][0]*quotients[i_minus2]+convs[i_minus2][0]
+        convs[i][1] = convs[i_minus1][1]*quotients[i_minus2]+convs[i_minus2][1]
+      end
+    end[2...nth+2]
   end
   
   def convergence_matrix(n,m,fill=nil) #:nodoc:
-    conv_mat = Array.new(n).map!{Array.new(m,fill)}
-    conv_mat[0][0],conv_mat[1][1] = 0,0
-    conv_mat
+    Array.new(n).map!{Array.new(m,fill)}.tap do |conv_mat|
+      conv_mat[0][0],conv_mat[1][1] = 0,0
+    end
   end
+end
+
+# @return [ContinuedFraction] new instance
+# @see ContinuedFraction#initialize
+#
+def ContinuedFraction(number,limit=5)
+  ContinuedFraction.new(number,limit=5)
 end

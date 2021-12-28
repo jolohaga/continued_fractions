@@ -4,6 +4,28 @@ describe ContinuedFraction do
   let(:cf) { described_class.new(number, 10) }
   let(:number) { rand }
 
+  describe 'initialize' do
+    context 'handling Integer, Float and Rational' do
+      let(:number) { [3/2r, 1.5, 10].sample }
+      let(:cf) { described_class.new(number) }
+
+      it 'initializes a continued fraction' do
+        expect(cf).to be_kind_of(ContinuedFraction)
+        expect(cf.number).to eq number
+      end
+    end
+
+    describe 'ContinuedFraction(...)' do
+      let(:real) { Math::PI }
+      let(:cf) { ContinuedFraction(real) }
+
+      it 'initializes a continued fraction' do
+        expect(cf).to be_kind_of(ContinuedFraction)
+        expect(cf.number).to eq Math::PI
+      end
+    end
+  end
+
   describe '#convergents' do
     it "returns an array" do
       expect(cf.convergents).to be_kind_of(Array)
