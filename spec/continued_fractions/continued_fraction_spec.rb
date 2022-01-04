@@ -5,7 +5,7 @@ describe ContinuedFraction do
   let(:number) { rand }
 
   describe 'initialize' do
-    context 'handling Integer, Float and Rational' do
+    context 'with Integer, Float and Rational' do
       let(:number) { [3/2r, 1.5, 10].sample }
       let(:cf) { described_class.new(number) }
 
@@ -16,12 +16,49 @@ describe ContinuedFraction do
     end
 
     describe 'ContinuedFraction(...)' do
-      let(:real) { Math::PI }
-      let(:cf) { ContinuedFraction(real) }
+      let(:number) { Math::PI }
+      let(:cf) { ContinuedFraction(number) }
 
       it 'initializes a continued fraction' do
         expect(cf).to be_kind_of(ContinuedFraction)
         expect(cf.number).to eq Math::PI
+      end
+    end
+
+    describe 'limit' do
+      let(:number) { Math::PI }
+      let(:cf) { ContinuedFraction.new(number) }
+
+      context 'unspecified' do
+        it 'length of quotients and convergents are DEFAULT_LIMIT' do
+          expect(cf.quotients.count).to eq ContinuedFraction::DEFAULT_LIMIT
+          expect(cf.convergents.count).to eq ContinuedFraction::DEFAULT_LIMIT
+        end
+      end
+
+      context 'when provided' do
+        let(:limit) { rand(20) }
+
+        context 'with an infinite continued fraction' do
+          let(:number) { Math::PI }
+          let(:cf) { ContinuedFraction.new(number, limit) }
+
+          it 'length of quotients and convergents are "limit"' do
+            expect(cf.quotients.count).to eq limit
+            expect(cf.convergents.count).to eq limit
+          end
+        end
+
+        context 'with a finite continued fraction' do
+          let(:number) { 3/2r }
+          let(:limit) { rand(2..20) }
+          let(:cf) { ContinuedFraction.new(number, limit) }
+
+          it 'length of quotients and convergents do not exceed "limit"' do
+            expect(cf.quotients.count).to be <= limit
+            expect(cf.convergents.count).to be <= limit
+          end
+        end
       end
     end
   end
@@ -107,6 +144,27 @@ describe ContinuedFraction do
       it "the ContinuedFractions are unequal" do
         expect(cf.send(cond[1], cf2)).to be true
       end
+    end
+  end
+
+  describe "(Integer|Rational|Float)#to_cf" do
+    let(:number) { [Math::PI, 1.5, 3/2r, 20].sample }
+
+    it "converts float to its continued fraction representation" do
+      converted_cf = number.to_cf
+      explicit_cf = ContinuedFraction.new(number)
+
+      expect(explicit_cf.number).to eq(converted_cf.number)
+      expect(explicit_cf.limit).to eq(converted_cf.limit)
+    end
+
+    it "can accept a limit" do
+      limit = rand(3..20)
+      converted_cf = number.to_cf(limit: limit)
+      explicit_cf = ContinuedFraction.new(number, limit)
+
+      expect(explicit_cf.number).to eq(converted_cf.number)
+      expect(explicit_cf.limit).to eq(converted_cf.limit)
     end
   end
 end

@@ -8,3 +8,6 @@
 /.ruby-version
 /.tm_properties
 pkg
+/.byebug_history
+Gemfile.lock
+continued_fractions-*.gem
