@@ -26,11 +26,10 @@ class ContinuedFraction
   #       @convergents=[[0, 1], [1, 0], [3, 1], [22, 7], [333, 106],
   #                     [355, 113], [103993, 33102], [104348, 33215], [208341, 66317], [312689, 99532], [833719, 265381], [1146408, 364913]]>
   #
-  def initialize(number,limit=DEFAULT_LIMIT)
+  def initialize(number, limit=DEFAULT_LIMIT)
     @number = number
-    @limit = limit
-    @quotients = calculate_quotients
-    @convergents = calculate_convergents
+    @ratioed_number = number.to_r
+    @quotients, @convergents, @limit = calculate_quotients_and_convergents(number, limit)
   end
 
   # Return nth convergent.
@@ -133,34 +132,37 @@ class ContinuedFraction
     yield(num,prec)
   end
 
-  def calculate_quotients #:nodoc:
-    n = number
-    Array.new(limit).tap do |qs|
-      limit.times do |i|
-        qs[i] = n.to_i
-        break if ((divisor = n-qs[i]) == 0.0)
-        n = 1.0/divisor
-      end
-      self.limit = qs.compact.length
-    end.compact
-  end
+  def calculate_quotients_and_convergents(x, limit)
+    _quotients = []
+    _convergents = []
 
-  def calculate_convergents #:nodoc:
-    nth = nil
-    convergence_matrix(quotients.length+2,2,1).tap do |convs|
-      nth ||= convs.length
-      2.upto(quotients.length+1) do |i|
-        i_minus1,i_minus2 = i-1,i-2
-        convs[i][0] = convs[i_minus1][0]*quotients[i_minus2]+convs[i_minus2][0]
-        convs[i][1] = convs[i_minus1][1]*quotients[i_minus2]+convs[i_minus2][1]
-      end
-    end[2...nth+2]
-  end
+    # Initialize the initial values for p and q
+    p_minus_1, q_minus_1 = 0, 1
+    p_0, q_0 = 1, 0
 
-  def convergence_matrix(n,m,fill=nil) #:nodoc:
-    Array.new(n).map!{Array.new(m,fill)}.tap do |conv_mat|
-      conv_mat[0][0],conv_mat[1][1] = 0,0
+    n = x.to_i
+
+    # Loop for maximum specified terms or until the fractional part becomes zero
+    limit.times do
+      _quotients << n
+
+      # Calculate the new p and q
+      p_n = n * p_0 + p_minus_1
+      q_n = n * q_0 + q_minus_1
+
+      _convergents << [p_n, q_n]
+
+      # Recalculate the fractional part
+      x = 1.0 / (x - n)
+      break if x.infinite? || _convergents.include?([@ratioed_number.numerator, @ratioed_number.denominator])
+
+      # Update the old values
+      p_minus_1, q_minus_1 = p_0, q_0
+      p_0, q_0 = p_n, q_n
+      n = x.to_i
     end
+
+    return _quotients, _convergents, _quotients.length
   end
 end
 
