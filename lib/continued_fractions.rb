@@ -4,12 +4,12 @@ require 'continued_fractions/include'
 #
 # Generates quotients and convergents for a given number
 #
-# Author:: Jose Hales-Garcia (mailto:jolohaga@me.com)
-# Copyright:: Copyright (c) 2022 Jose Hales-Garcia
+# Author:: Jose Hales-Garcia (mailto:jose@halesgarcia.com)
+# Copyright:: Copyright (c) 2023 Jose Hales-Garcia
 #
 #
 class ContinuedFraction
-  include ::Comparable
+  include Comparable
 
   attr_accessor :number, :quotients, :limit
 
