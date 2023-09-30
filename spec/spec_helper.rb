@@ -1,7 +1,8 @@
 $LOAD_PATH << File.join(File.dirname(__FILE__), "/../lib")
-require 'rubygems'
-require 'rspec'
-require 'continued_fractions'
+require "rubygems"
+require "rspec"
+require "byebug"
+require "continued_fractions"
 
 RSpec.configure do |config|
   # Run specs in random order to surface order dependencies. If you find an
@@ -10,4 +11,6 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
   config.formatter = :documentation
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
 end

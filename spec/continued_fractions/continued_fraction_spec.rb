@@ -1,79 +1,80 @@
 require File.join(File.dirname(__FILE__), "/../spec_helper")
 
-describe ContinuedFraction do
-  let(:cf) { described_class.new(number, 10) }
+RSpec.describe ContinuedFraction do
+  let(:cf) { described_class.new(number, limit) }
+  let(:limit) { 10 }
   let(:number) { rand }
 
-  describe 'initialize' do
-    context 'with Integer, Float and Rational' do
-      let(:number) { [3/2r, 1.5, 10].sample }
-      let(:cf) { described_class.new(number) }
+  describe "initialization" do
+    let(:cf) { described_class.new(number) }
+    let(:number) { [3/2r, 1.5, 10].sample }
 
-      it 'initializes a continued fraction' do
-        expect(cf).to be_kind_of(ContinuedFraction)
-        expect(cf.number).to eq number
+    it "initializes a continued fraction" do
+      expect(cf).to be_a_kind_of(described_class)
+    end
+
+    it "accepts a number" do
+      expect(cf.number).to eq number
+    end
+
+    context "with irrational numbers" do
+      let(:number) { Math::PI }
+
+      it "sets the limit to 5 by default" do
+        expect(cf.limit).to eq 5
+      end
+
+      it "quotient and convergent lists are 5 long by default" do
+        expect(cf.convergents.length).to eq 5
+        expect(cf.quotients.length).to eq 5
+      end
+
+      context "increasing limit" do
+        let(:cf) { described_class.new(number, limit) }
+        let(:limit) { 10 }
+
+        it "quotient and convergent lists are limit long" do
+          expect(cf.convergents.length).to eq 10
+          expect(cf.quotients.length).to eq 10
+        end
       end
     end
 
-    describe 'ContinuedFraction(...)' do
+    context "with finite expansion numbers" do
+      let(:number) { [7/4r, 15/8r, 1.75, 35/18r].sample }
+      let(:limit) { 10 }
+      let(:cf) { described_class.new(number, limit) }
+
+      it "length of quotients and convergents do not exceed 'limit'" do
+        puts "#{cf.quotients}"
+        expect(cf.quotients.length).to be <= limit
+        expect(cf.convergents.length).to be <= limit
+      end
+    end
+
+    describe "ContinuedFraction(...)" do
       let(:number) { Math::PI }
       let(:cf) { ContinuedFraction(number) }
 
-      it 'initializes a continued fraction' do
-        expect(cf).to be_kind_of(ContinuedFraction)
+      it "initializes a continued fraction" do
+        expect(cf).to be_a_kind_of(described_class)
         expect(cf.number).to eq Math::PI
-      end
-    end
-
-    describe 'limit' do
-      let(:number) { Math::PI }
-      let(:cf) { ContinuedFraction.new(number) }
-
-      context 'unspecified' do
-        it 'length of quotients and convergents are DEFAULT_LIMIT' do
-          expect(cf.quotients.count).to eq ContinuedFraction::DEFAULT_LIMIT
-          expect(cf.convergents.count).to eq ContinuedFraction::DEFAULT_LIMIT
-        end
-      end
-
-      context 'when provided' do
-        let(:limit) { rand(20) }
-
-        context 'with an infinite continued fraction' do
-          let(:number) { Math::PI }
-          let(:cf) { ContinuedFraction.new(number, limit) }
-
-          it 'length of quotients and convergents are "limit"' do
-            expect(cf.quotients.count).to eq limit
-            expect(cf.convergents.count).to eq limit
-          end
-        end
-
-        context 'with a finite continued fraction' do
-          let(:number) { 3/2r }
-          let(:limit) { rand(2..20) }
-          let(:cf) { ContinuedFraction.new(number, limit) }
-
-          it 'length of quotients and convergents do not exceed "limit"' do
-            expect(cf.quotients.count).to be <= limit
-            expect(cf.convergents.count).to be <= limit
-          end
-        end
       end
     end
   end
 
-  describe '#convergents' do
+  describe "#convergents" do
     it "returns an array" do
-      expect(cf.convergents).to be_kind_of(Array)
+      expect(cf.convergents).to be_a_kind_of(Array)
     end
 
-    context 'with irrational numbers' do
+    context "with irrational numbers" do
+      let(:cf) { described_class.new(cf_data.first, 10) }
+      let(:cf_data) { [Math::PI, [3/1r, 22/7r, 333/106r, 355/113r, 103993/33102r, 104348/33215r, 208341/66317r, 312689/99532r, 833719/265381r, 1146408/364913r]] }
+
       it "accurately calculates the convergents" do
         # First 10 convergents of PI are...
-        convs = [3/1r, 22/7r, 333/106r, 355/113r, 103993/33102r, 104348/33215r, 208341/66317r, 312689/99532r, 833719/265381r, 1146408/364913r]
-        cf = described_class.new(Math::PI,10)
-        expect((cf.convergents_as_rationals - convs)).to be_empty
+        expect((cf.convergents_as_rationals - cf_data.last)).to be_empty
       end
 
       it "contains convergents approaching the number" do
@@ -91,32 +92,27 @@ describe ContinuedFraction do
       end
     end
 
-    context 'with rational numbers' do
-      it 'changes the limit to the number of convergents calculated' do
-        expect(described_class.new(1.5, 10).limit).to be 2
+    context "with rational numbers" do
+      let(:cf_data) { [[3/2r, [1/1r, 3/2r]], [35/18r, [1/1r, 2/1r, 33/17r, 35/18r]]].sample }
+
+      it "changes the limit to the number of convergents calculated" do
+        expect(described_class.new(cf_data.first, 10).limit).to be cf_data.last.count
       end
     
-      it 'calculates the convergents' do
-        convs = [ 1/1r, 3/2r ]
-        expect(described_class.new(1.5, 10).convergents_as_rationals - convs).to be_empty
+      it "calculates the convergents" do
+        expect(described_class.new(cf_data.first, 10).convergents_as_rationals - cf_data.last).to be_empty
       end
     end
   end
 
-  describe '#number' do
-    it "preserves the number input" do
-      expect(cf.number).to eq number
-    end
-  end
-
-  describe 'operators' do
+  describe "operations" do
     let(:cf2) { described_class.new(rand, 20) }
 
     %i{+ - * /}.each do |op|
       describe "#{op}" do
         [3, 3.0, 3/1r, described_class.new(rand, 20)].each do |rhs|
           it "#{rhs.class.name} operates on the right-hand side and returns a ContinuedFraction" do
-            expect(cf.send(op, rhs)).to be_kind_of(ContinuedFraction)
+            expect(cf.send(op, rhs)).to be_a_kind_of(described_class)
           end
         end
 
@@ -128,8 +124,8 @@ describe ContinuedFraction do
     end
   end
 
-  describe 'comparing' do
-    context 'when numbers are the same' do
+  describe "comparison" do
+    context "when numbers are the same" do
       let(:cf2) { described_class.new(cf.number) }
 
       it "the ContinuedFractions are equal" do
@@ -137,8 +133,8 @@ describe ContinuedFraction do
       end
     end
 
-    context 'when numbers are different' do
-      let(:cond) { [['+', '<'], ['-', '>']].sample }
+    context "when numbers are different" do
+      let(:cond) { [["+", "<"], ["-", ">"]].sample }
       let(:cf2) { described_class.new(cf.number.send(cond[0], 1.0)) }
 
       it "the ContinuedFractions are unequal" do
@@ -152,7 +148,7 @@ describe ContinuedFraction do
 
     it "converts float to its continued fraction representation" do
       converted_cf = number.to_cf
-      explicit_cf = ContinuedFraction.new(number)
+      explicit_cf = described_class.new(number)
 
       expect(explicit_cf.number).to eq(converted_cf.number)
       expect(explicit_cf.limit).to eq(converted_cf.limit)
@@ -161,7 +157,7 @@ describe ContinuedFraction do
     it "can accept a limit" do
       limit = rand(3..20)
       converted_cf = number.to_cf(limit: limit)
-      explicit_cf = ContinuedFraction.new(number, limit)
+      explicit_cf = described_class.new(number, limit)
 
       expect(explicit_cf.number).to eq(converted_cf.number)
       expect(explicit_cf.limit).to eq(converted_cf.limit)
