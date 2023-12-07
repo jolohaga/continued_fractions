@@ -11,4 +11,5 @@ pkg
 /.byebug_history
 Gemfile.lock
 continued_fractions-*.gem
-TODO*
+notes
+.yardoc
