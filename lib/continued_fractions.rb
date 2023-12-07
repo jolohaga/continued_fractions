@@ -6,15 +6,6 @@ require 'continued_fractions/include'
 #
 # @author Jose Hales-Garcia
 #
-# @attr_reader number [Numeric]
-#   The number who's continued fraction is being calculated
-# @attr_reader quotients [Array]
-#   The array of quotients of the continued fraction
-# @attr_reader convergents [Array]
-#   The convergents of the continued fraction
-# @attr_reader limit [Integer]
-#   The limit to calculate. Practical for real numbers, although they're limited by the system.
-#
 class ContinuedFraction
   include Comparable
 
