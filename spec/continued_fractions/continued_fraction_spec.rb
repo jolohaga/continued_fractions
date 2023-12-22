@@ -34,6 +34,17 @@ RSpec.describe ContinuedFraction do
     end
   end
 
+  describe ".from_quotients" do
+    let(:quotients) { [2, 1, 2, 1, 1, 4, 1, 1, 6, 1, 1, 8, 1, 1, 10, 1, 1, 12, 1, 1, 14] }
+    let(:result) { described_class.from_quotients(quotients) }
+
+    it "generates a continued fraction" do
+      expect(result).to be_a_kind_of(described_class)
+      expect(result.number).to eq Math::E
+      expect(result.quotients.length).to eq quotients.length
+    end
+  end
+
   describe "#convergents" do
     it "returns an array" do
       expect(cf.convergents).to be_a_kind_of(Array)
