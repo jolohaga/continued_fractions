@@ -1,6 +1,5 @@
 # ContinuedFractions
-
-* http://rubygems.org/gems/continued_fractions
+[![Gem Version](https://badge.fury.io/rb/continued_fractions.svg)](https://badge.fury.io/rb/continued_fractions)
 
 ## Description
 
