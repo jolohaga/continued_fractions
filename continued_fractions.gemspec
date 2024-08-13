@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.description = "Class for working with continued fractions"
   spec.authors = ["Jose Hales-Garcia"]
   spec.email = "jose@halesgarcia.com"
-  spec.homepage = "https://jolohaga.github.io/continued_fractions"
+  spec.homepage = "https://jolohaga.github.io/continued_fractions/"
   spec.metadata = {
-    "source_code_uri" => "https://github.com/jolohaga/continued_fractions",
-    "documentation_uri" => "https://jolohaga.github.io/continued_fractions",
+    "source_code_uri" => "https://github.com/jolohaga/continued_fractions/",
+    "documentation_uri" => "https://jolohaga.github.io/continued_fractions/",
   }
   spec.licenses = ["MIT"]
   spec.date = Date.today.to_s
