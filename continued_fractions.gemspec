@@ -2,7 +2,7 @@ require "date"
 
 Gem::Specification.new do |spec|
   spec.name = "continued_fractions"
-  spec.version = "2.1.0"
+  spec.version = "2.1.1"
   spec.summary = "Generate continued fractions"
   spec.description = "Class for working with continued fractions"
   spec.authors = ["Jose Hales-Garcia"]
@@ -18,8 +18,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.required_ruby_version = Gem::Requirement.new(">= 3.1")
   spec.required_rubygems_version = Gem::Requirement.new(">= 3.1")
-  spec.rubygems_version = "3.4.22"
-  spec.add_development_dependency("rspec", ["~> 3.2"])
+  spec.rubygems_version = "3.5.22"
+  spec.add_development_dependency("rspec", ["~> 3"])
   spec.add_development_dependency("byebug", ["~> 11.1"])
   spec.add_development_dependency "yard", ["~> 0.9"]
 end
