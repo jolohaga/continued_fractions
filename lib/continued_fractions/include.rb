@@ -13,6 +13,22 @@ module ContinuedFractions
   end
 end
 
-Float.include(ContinuedFractions::Numeric)
-Integer.include(ContinuedFractions::Numeric)
-Rational.include(ContinuedFractions::Numeric)
+# @!visibility private
+class Float
+  include ContinuedFractions::Numeric
+end
+
+# @!visibility private
+class Integer
+  include ContinuedFractions::Numeric
+end
+
+# @!visibility private
+class Rational
+  include ContinuedFractions::Numeric
+end
+
+# @!visibility private
+class BigDecimal
+  include ContinuedFractions::Numeric
+end
